@@ -1,0 +1,139 @@
+*$
+* LM385-ADJ
+*****************************************************************************
+* (C) Copyright 2015 Texas Instruments Incorporated. All rights reserved.                                            
+*****************************************************************************
+** This model is designed as an aid for customers of Texas Instruments.
+** TI and its licensors and suppliers make no warranties, either expressed
+** or implied, with respect to this model, including the warranties of 
+** merchantability or fitness for a particular purpose.  The model is
+** provided solely on an "as is" basis.  The entire risk as to its quality
+** and performance is with the customer
+*****************************************************************************
+*
+* This model is subject to change without notice. Texas Instruments
+* Incorporated is not responsible for updating this model.
+*
+*****************************************************************************
+*
+** Released by: WEBENCH Design Center, Texas Instruments Inc.
+* Part: LM385-ADJ
+* Date: 04AUG2015
+* Model Type: TRANSIENT
+* Simulator: PSPICE
+* Simulator Version: 16.2.0.p001
+* EVM Order Number: NA
+* EVM Users Guide: NA
+* Datasheet: SNVS741F –FEBRUARY 2000–REVISED APRIL 2013
+*
+* Model Version: Final 1.00
+*
+*****************************************************************************
+*
+* Updates:
+*
+* Final 1.00
+* Release to Web.
+*
+*****************************************************************************
+.SUBCKT LM385-ADJ_TRANS A FB K NC_0 NC_1 NC_2 NC_3 NC_4
+R_NC0 NC_0 0 1E6
+R_NC1 NC_1 0 1E6
+R_NC2 NC_2 0 1E6
+R_NC3 NC_3 0 1E6
+R_NC4 NC_4 0 1E6
+R_R18         0 N16955548  1 TC=0,0 
+C_C17         N16955362 0  1n  
+C_C18         2 A  0.5u  
+X_U6         FB N16955360 vnse PARAMS:
+C_C19         3 4  0.08u  
+E_E23         2 N16955404 VALUE { {I(V_V16)*15.6} }
+C_C22         N16955548 0  1n  
+R_R13         N16955401 N16955404  1 TC=0,0 
+E_E27         VREF 0 VALUE { 1.24 }
+V_V16         N16955401 A 0Vdc
+G_ABM2I2         A N16955634 VALUE { IF((V(3)-V(A))< 0 , 1.73*(V(3)-V(A)) -1U ,
++  -1U)    }
+R_R14         0 N16955362  1 TC=0,0 
+D_D11         5 N16955634 DCLAMP 
+X_H8    K N16955914 IKA A ATL431_TOP_H8 
+X_D12         N16955914 N16955634 d_d1 PARAMS: 
+E_E24         4 N16955473 VALUE { {I(V_V17)*10} }
+E_E28         N16955936 0 N16955360 A 1
+V_V7         5 A 0.5
+R_R15         N16955470 N16955473  1 TC=0,0 
+V_V17         N16955470 A 0Vdc
+G_G4         A 2 VREF N16955936 0.11
+R_R16         0 N16955493  1 TC=0,0 
+R_R17         N16955529 N16955532  1 TC=0,0 
+C_C21         N16955493 0  1n  
+E_E25         3 N16955532 VALUE { {I(V_V18)*100} }
+V_V18         N16955529 2 0Vdc
+.ENDS LM385-ADJ_TRANS
+*$
+.subckt ATL431_TOP_H8 1 2 3 4  
+H_H8         3 4 VH_H8 1
+VH_H8         1 2 0V
+.ends ATL431_TOP_H8
+*$
+.subckt vnse 1 2
+* BEGIN SETUP OF NOISE GEN - NANOVOLT/RT-HZ
+* INPUT THREE VARIABLES
+* SET UP VNSE 1/F
+* NV/RHZ AT 1/F FREQ
+.PARAM NLF=265
+* FREQ FOR 1/F VAL
+.PARAM FLW=10
+* SET UP VNSE FB
+* NV/RHZ FLATBAND
+.PARAM NVR=128
+* END USER INPUT
+* START CALC VALS
+.PARAM GLF={PWR(FLW,0.25)*NLF/1164}
+.PARAM RNV={1.184*PWR(NVR,2)}
+.MODEL DVN D KF={PWR(FLW,0.2)/1E11} IS=1.0E-16
+* END CALC VALS
+I1 0 7 10E-3
+I2 0 8 10E-3
+D1 7 0 DVN
+D2 8 0 DVN
+E1 3 6 7 8 {GLF}
+R1 3 0 1E9
+R2 3 0 1E9
+R3 3 6 1E9
+E2 6 4 5 0 10
+R4 5 0 {RNV}
+R5 5 0 {RNV}
+R6 3 4 1E9
+R7 4 0 1E9
+E3 1 2 3 4 1
+C1 1 0 1E-15
+C2 2 0 1E-15
+C3 1 2 1E-15
+.ends
+*$
+.model DCLAMP d
++ is=1.35e-008
++ rs=0.025
++ n=1.59
++ cjo=4.5e-011
++ vj=0.75
++ m=0.302
++ tt=5.04e-008
++ bv=34
++ ibv=0.001
+*$
+.subckt d_d1 1 2
+d1 1 2 dd1
+.model dd1 d
++ is=1.35e-008
++ rs=0.025
++ n=1.59
++ cjo=4.5e-011
++ vj=0.75
++ m=0.302
++ tt=5.04e-008
++ bv=34
++ ibv=0.001
+.ends d_d1
+*$

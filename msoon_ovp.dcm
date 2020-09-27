@@ -1,0 +1,9 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP Q_SCR_KAGA
+D Silicon controlled rectifier, cathode/anode/gate/anode/
+K SCR thyristor
+F ~
+$ENDCMP
+#
+#End Doc Library
