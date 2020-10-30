@@ -22,10 +22,10 @@ F 1 "LM285M-ADJ" V 4805 3362 50  0000 R CNN
 F 2 "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm" H 4850 3250 50  0001 C CIN
 F 3 "http://www.ti.com/lit/ds/symlink/lm185-adj.pdf" H 4850 3450 50  0001 C CIN
 F 4 "X" H 4850 3450 50  0001 C CNN "Spice_Primitive"
-F 5 "LM385-ADJ_TRANS" H 4850 3450 50  0001 C CNN "Spice_Model"
+F 5 "TL431LI_AVG" H 4850 3450 50  0001 C CNN "Spice_Model"
 F 6 "Y" H 4850 3450 50  0001 C CNN "Spice_Netlist_Enabled"
-F 7 "4 5 8 1 2 3 6 7" H 4850 3450 50  0001 C CNN "Spice_Node_Sequence"
-F 8 "spice_models/LM385-ADJ_TRANS.LIB" H 4850 3450 50  0001 C CNN "Spice_Lib_File"
+F 7 "8 5 4" H 4850 3450 50  0001 C CNN "Spice_Node_Sequence"
+F 8 "spice_models/TL431LI_AVG.LIB" H 4850 3450 50  0001 C CNN "Spice_Lib_File"
 	1    4850 3450
 	0    -1   -1   0   
 $EndComp
@@ -34,7 +34,7 @@ L Device:R R1
 U 1 1 5F6FDC29
 P 4100 3150
 F 0 "R1" H 4170 3196 50  0000 L CNN
-F 1 "120K" H 4170 3105 50  0000 L CNN
+F 1 "323.2k" H 4170 3105 50  0000 L CNN
 F 2 "Resistor_SMD:R_0805_2012Metric" V 4030 3150 50  0001 C CNN
 F 3 "~" H 4100 3150 50  0001 C CNN
 	1    4100 3150
@@ -788,7 +788,7 @@ Wire Wire Line
 	5850 3000 5850 2650
 Connection ~ 5850 2650
 Wire Wire Line
-	5850 3300 5850 4250
+	5850 3300 5850 3650
 Connection ~ 5850 4250
 Wire Wire Line
 	5850 4250 6400 4250
@@ -858,7 +858,7 @@ F 1 "VSOURCE" H 3328 3405 50  0000 L CNN
 F 2 "" H 3100 3450 50  0001 C CNN
 F 3 "~" H 3100 3450 50  0001 C CNN
 F 4 "V" H 3100 3450 50  0001 C CNN "Spice_Primitive"
-F 5 "pulse(0 15 1 1 1)" H 3100 3450 50  0001 C CNN "Spice_Model"
+F 5 "pulse(0 15 1 1 1 1)" H 3100 3450 50  0001 C CNN "Spice_Model"
 F 6 "Y" H 3100 3450 50  0001 C CNN "Spice_Netlist_Enabled"
 	1    3100 3450
 	1    0    0    -1  
@@ -866,11 +866,44 @@ $EndComp
 Wire Wire Line
 	3100 3150 3100 2650
 Wire Wire Line
-	3100 2650 4100 2650
+	3100 2650 3300 2650
 Wire Wire Line
 	3100 3750 3100 4250
 Wire Wire Line
 	3100 4250 4100 4250
+Text Label 5000 3250 0    50   ~ 0
+REFout
+Text Label 4250 3450 0    50   ~ 0
+REFin
+$Comp
+L Device:R R4
+U 1 1 5F70E79C
+P 3450 2650
+F 0 "R4" V 3657 2650 50  0000 C CNN
+F 1 "1R" V 3566 2650 50  0000 C CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 3380 2650 50  0001 C CNN
+F 3 "~" H 3450 2650 50  0001 C CNN
+	1    3450 2650
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	3600 2650 4100 2650
+$Comp
+L Device:R R5
+U 1 1 5F710067
+P 5850 3800
+F 0 "R5" H 5920 3846 50  0000 L CNN
+F 1 "1R" H 5920 3755 50  0000 L CNN
+F 2 "Resistor_SMD:R_0805_2012Metric" V 5780 3800 50  0001 C CNN
+F 3 "~" H 5850 3800 50  0001 C CNN
+F 4 "R" H 5850 3800 50  0001 C CNN "Spice_Primitive"
+F 5 "1" H 5850 3800 50  0001 C CNN "Spice_Model"
+F 6 "Y" H 5850 3800 50  0001 C CNN "Spice_Netlist_Enabled"
+	1    5850 3800
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5850 3950 5850 4250
 Text Notes 3100 4400 0    50   ~ 0
 .tran 0.01 5 0
 $EndSCHEMATC
